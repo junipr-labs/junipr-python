@@ -95,6 +95,33 @@ print(meta.og.image)       # "https://example.com/og-image.png"
 print(meta.language)       # "en"
 ```
 
+### Async Usage
+
+All methods are available as async variants via `AsyncJunipr`.
+
+```python
+import asyncio
+from junipr import AsyncJunipr
+
+async def main():
+    async with AsyncJunipr("your-api-key") as client:
+        # Screenshot
+        image = await client.screenshot("https://example.com", full_page=True)
+        with open("screenshot.png", "wb") as f:
+            f.write(image)
+
+        # PDF
+        pdf = await client.pdf(url="https://example.com", format="A4")
+        with open("output.pdf", "wb") as f:
+            f.write(pdf)
+
+        # Metadata
+        meta = await client.metadata("https://example.com")
+        print(meta.title)
+
+asyncio.run(main())
+```
+
 ### Error Handling
 
 All API errors raise `JuniprError` with structured error details.
